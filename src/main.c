@@ -53,6 +53,7 @@ unsigned char rate[4] = {0};
 unsigned char rate_yaw[4] = {0};
 unsigned char profileAB = 0;
 
+unsigned short crosshair_l=130;
 unsigned short low_bat_l=160;
 unsigned short mode_l=230;
 unsigned short vol_l=240;
