@@ -23,6 +23,9 @@ unsigned char  sec_text[2] = {0};
 unsigned char  lock = 0;
 unsigned char  showcase = 9;
 unsigned char  VOT_value[3] = {0};
+unsigned short RSSI;
+unsigned char  RSSI_value[3] = {0};
+unsigned char  RSSI_warning = 0;
 unsigned char  flymode = 0;
 unsigned char  proto=1;
 unsigned char  index=0;
@@ -173,6 +176,12 @@ void flight_window_data()
     }
 
    // turtle = UART_Buffer[7];
+    RSSI = UART_Buffer[7];
+    RSSI_value[0] = (RSSI/100) << 3;
+    RSSI_value[1] = (RSSI%100/10) << 3;
+    RSSI_value[2] = (RSSI%100%10) << 3;
+
+		RSSI_warning = UART_Buffer[10];
     
 }
  

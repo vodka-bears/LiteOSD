@@ -4,7 +4,10 @@
 
 unsigned char  temp = 0;
 extern unsigned short line;
-extern unsigned char  VOT_value[3];     
+extern unsigned char  VOT_value[3];   
+extern unsigned short RSSI;
+extern unsigned char  RSSI_value[3];     
+extern unsigned char  RSSI_warning;
 extern unsigned char  min_text[2];
 extern unsigned char  sec_text[2];
 extern unsigned char  minute;
@@ -267,8 +270,32 @@ void flight_window(unsigned short line)
     if(low_bat_l<line && line<low_bat_l+9)
     {
         temp = line - low_bat_l;
-        if((VOT_value[0]<=low_battery[0] && VOT_value[1]< low_battery[1]) || VOT_value[0]<low_battery[0])
+			  if(RSSI_warning)
         {
+            delay(60);
+            SPI0DAT = letters[_r+(temp)];
+            SPI0DAT = letters[_s+(temp)];
+            SPI0DAT = letters[_s+(temp)];
+            SPI0DAT = letters[_i+(temp)];
+            SPI0DAT = letters[0+(temp)];
+            SPI0DAT = letters[_c+(temp)];
+            delay(1);
+            SPI0DAT = letters[_r+(temp)];
+            delay(1);
+            SPI0DAT = letters[_i+(temp)];
+            delay(1);
+            SPI0DAT = letters[_t+(temp)];
+            delay(1);
+            SPI0DAT = letters[_i+(temp)];
+            delay(1);
+            SPI0DAT = letters[_c+(temp)];
+            delay(1);
+            SPI0DAT = letters[_a+(temp)];
+            delay(1);
+            SPI0DAT = letters[_l+(temp)];
+        }
+				else if((VOT_value[0]<=low_battery[0] && VOT_value[1]< low_battery[1]) || VOT_value[0]<low_battery[0])
+				{
             delay(65);
             SPI0DAT = letters[_l+(temp)];
             SPI0DAT = letters[_o+(temp)];
@@ -308,8 +335,29 @@ void flight_window(unsigned short line)
     if(mode_l<line && line<mode_l+9)
     {
         temp = line - mode_l;
-        switch (proto)
-        {
+				
+				if (RSSI > 0)
+				{
+					delay(5);
+					SPI0DAT =numbers[152+(temp)]; //RSSI Symbol 1
+					delay(1);
+					SPI0DAT =numbers[160+(temp)]; //RSSI Symbol 2
+					SPI0DAT = letters[0+(temp)];
+					if (RSSI_value[0] > 0)
+						SPI0DAT =numbers[RSSI_value[0]+(temp)];
+					else
+						SPI0DAT = letters[0+(temp)];
+					if (RSSI_value[1] > 0 || RSSI_value[0] > 0 )
+						SPI0DAT =numbers[RSSI_value[1]+(temp)];
+					else
+						SPI0DAT = letters[0+(temp)];					
+					SPI0DAT =numbers[RSSI_value[2]+(temp)];
+					delay(3);
+				}
+				else
+				{
+					switch (proto)
+					{
             case 0:
             case 1:
                 delay(5);
@@ -321,7 +369,7 @@ void flight_window(unsigned short line)
                 SPI0DAT =letters[_n+(temp)];
                 delay(3);
                 SPI0DAT =letters[_g+(temp)];
-                delay(4);
+                delay(3);
                 break;
             case 2:
                 delay(5);
@@ -339,8 +387,10 @@ void flight_window(unsigned short line)
                 SPI0DAT =letters[_x+(temp)];
                 delay(2);
                 break;
-        }
-        switch (flymode)
+					}
+				}
+
+				switch (flymode)
         {
             case 0:
                 delay(110);
