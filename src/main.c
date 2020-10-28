@@ -67,6 +67,9 @@ unsigned char mode_l_temp[2]={0};
 unsigned char vol_l_temp[2]={0};
 unsigned char turtle_l_temp[2]={0};
 unsigned char low_battery[2]={24,16};
+unsigned char low_rssi[2]={32,0};
+unsigned short low_batt_value=32;
+unsigned short low_rssi_value=40;
 
 extern unsigned char UART_Buffer[12];
 extern void delay(unsigned char n);
@@ -123,8 +126,13 @@ void display_window_data()
     turtle_l_temp[0] = (UART_Buffer[6]/10) << 3;
     turtle_l_temp[1] = (UART_Buffer[6]%10) << 3;
 
-    low_battery[0] = (UART_Buffer[7]/10) << 3;
+		low_batt_value = UART_Buffer[7];
+		low_battery[0] = (UART_Buffer[7]/10) << 3;
     low_battery[1] = (UART_Buffer[7]%10) << 3;
+
+    low_rssi_value = UART_Buffer[8];
+		low_rssi[0] = (UART_Buffer[8]/10) << 3;
+    low_rssi[1] = (UART_Buffer[8]%10) << 3;
 }
 
 void flight_window_data()

@@ -49,6 +49,7 @@ extern unsigned char mode_l_temp[2];
 extern unsigned char vol_l_temp[2];
 extern unsigned char turtle_l_temp[2];
 extern unsigned char low_battery[2];
+extern unsigned char low_rssi[2];
 
 extern unsigned char   rx0[3];
 extern unsigned char   rx1[3];
@@ -1813,37 +1814,51 @@ void display_window(unsigned short line)
 			{
 					delay(35);
 			}
+			SPI0DAT = letters[0+(temp)];
+			SPI0DAT = letters[_l+(temp)];
+            SPI0DAT = letters[_o+(temp)];
+            SPI0DAT = letters[_w+(temp)];
+            SPI0DAT = letters[0+(temp)];
+            delay(1);
+            SPI0DAT = letters[_r+(temp)];
+            delay(1);
+            SPI0DAT = letters[_s+(temp)];
+            delay(1);
+            SPI0DAT = letters[_s+(temp)];
+            delay(1);
+            SPI0DAT = letters[_i+(temp)];
+            delay(1);
+            SPI0DAT = numbers[ 104+(temp)];
+            delay(20);
+            SPI0DAT = numbers[low_rssi[0]+(temp)];
+            SPI0DAT = numbers[low_rssi[1]+(temp)];
+            delay(1);
+			break;
+            
+    case 171:
+		case 172:
+		case 173:
+		case 174:
+		case 175:
+		case 176:
+		case 177:
+		case 178:
+			temp = line - 171;
+			if (index == 5)
+			{
+					delay(58);
+					SPI0DAT = numbers[ 96+(temp)];
+			}
+			else
+			{
+					delay(65);
+			}
             SPI0DAT = letters[0+(temp)];
 			SPI0DAT = letters[_b+(temp)];
             SPI0DAT = letters[_a+(temp)];
             SPI0DAT = letters[_c+(temp)];
-            delay(1);
+            delay(3);
             SPI0DAT = letters[_k+(temp)];
-            
-//        case 171:
-//		case 172:
-//		case 173:
-//		case 174:
-//		case 175:
-//		case 176:
-//		case 177:
-//		case 178:
-//			temp = line - 171;
-//			if (index == 5)
-//			{
-//					delay(58);
-//					SPI0DAT = numbers[ 96+(temp)];
-//			}
-//			else
-//			{
-//					delay(65);
-//			}
-//            SPI0DAT = letters[0+(temp)];
-//			SPI0DAT = letters[_b+(temp)];
-//            SPI0DAT = letters[_a+(temp)];
-//            SPI0DAT = letters[_c+(temp)];
-//            delay(3);
-//            SPI0DAT = letters[_k+(temp)];
             
 		default:
 			break;
