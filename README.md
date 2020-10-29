@@ -6,5 +6,9 @@ https://www.rcgroups.com/forums/showthread.php?1473207-Diy-osd-(Arduino-and-open
 
 ## Specification
 MCU: Silicon Lab EFM8BB21f16G_A_QFN20
-
 IDE: uVision Keil (C51 Lab)
+
+## Notes
+To build you might need both Keil (to build) and Simplicity studio (to cure Keil from greediness). 
+If you don't like crosshair on the center of OSD you might not like this.
+This repo contains only source code, binaries are here: https://github.com/vodka-bears/BetterLiteV2
