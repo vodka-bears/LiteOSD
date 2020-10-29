@@ -21,6 +21,7 @@ unsigned short Vol;
 unsigned char  min_text[2] = {0};
 unsigned char  sec_text[2] = {0};
 unsigned char  lock = 0;
+unsigned char  hideosd = 0;
 unsigned char  showcase = 9;
 unsigned char  VOT_value[3] = {0};
 unsigned short RSSI;
@@ -66,6 +67,7 @@ unsigned char low_bat_l_temp[2]={0};
 unsigned char mode_l_temp[2]={0};
 unsigned char vol_l_temp[2]={0};
 unsigned char turtle_l_temp[2]={0};
+unsigned char crosshair_l_temp[2]={0};
 unsigned char low_battery[2]={24,16};
 unsigned char low_rssi[2]={32,0};
 unsigned short low_batt_value=32;
@@ -113,6 +115,7 @@ void display_window_data()
     mode_l = UART_Buffer[3] *10 ;
     vol_l = UART_Buffer[4] *10 ;
     turtle_l = UART_Buffer[6] * 10;
+    crosshair_l = UART_Buffer[9] * 10;
     
     low_bat_l_temp[0] = (UART_Buffer[2]/10) << 3;
     low_bat_l_temp[1] = (UART_Buffer[2]%10) << 3;
@@ -133,12 +136,16 @@ void display_window_data()
     low_rssi_value = UART_Buffer[8];
 		low_rssi[0] = (UART_Buffer[8]/10) << 3;
     low_rssi[1] = (UART_Buffer[8]%10) << 3;
+
+		crosshair_l_temp[0] = (UART_Buffer[9]/10) << 3;
+    crosshair_l_temp[1] = (UART_Buffer[9]%10) << 3;
+
 }
 
 void flight_window_data()
 {
-	lock = UART_Buffer[1];
-
+		lock = UART_Buffer[1];
+		hideosd = UART_Buffer[2];
     Vol = (UART_Buffer[3] << 8) + UART_Buffer[4];
     VOT_value[0] = (Vol/100) << 3;
     VOT_value[1] = (Vol%100/10) << 3;
