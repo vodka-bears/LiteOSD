@@ -21,7 +21,7 @@ unsigned short Vol;
 unsigned char  min_text[2] = {0};
 unsigned char  sec_text[2] = {0};
 unsigned char  lock = 0;
-unsigned char  hideosd = 0;
+unsigned char  showcrosshair = 0;
 unsigned char  showcase = 9;
 unsigned char  VOT_value[3] = {0};
 unsigned short RSSI;
@@ -145,7 +145,7 @@ void display_window_data()
 void flight_window_data()
 {
 		lock = UART_Buffer[1];
-		hideosd = UART_Buffer[2];
+		showcrosshair = UART_Buffer[2];
     Vol = (UART_Buffer[3] << 8) + UART_Buffer[4];
     VOT_value[0] = (Vol/100) << 3;
     VOT_value[1] = (Vol%100/10) << 3;

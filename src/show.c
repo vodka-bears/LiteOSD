@@ -16,7 +16,7 @@ extern unsigned char  flymode;
 extern unsigned char  proto;
 extern unsigned char  index;
 extern unsigned char  lock;
-extern unsigned char  hideosd;
+extern unsigned char  showcrosshair;
 extern unsigned char  m1;
 extern unsigned char  m2;
 extern unsigned char  m3;
@@ -239,32 +239,30 @@ void init_window(unsigned short line)
     if(show_betafpvline)
     {
         temp = line - 160;
-        delay(43);
-        SPI0DAT = letters[_v+(temp)];
+        delay(48);
+        SPI0DAT = letters[_t+(temp)];
         SPI0DAT = letters[_o+(temp)];
+        delay(2);
+        SPI0DAT = letters[_k+(temp)];
+        delay(3);
+        SPI0DAT = letters[_y+(temp)];
+        delay(3);
+        SPI0DAT = letters[_o+(temp)];
+        delay(3);
+        SPI0DAT = numbers[144+(temp)];
         delay(2);
         SPI0DAT = letters[_d+(temp)];
         delay(3);
-        SPI0DAT = letters[_k+(temp)];
+        SPI0DAT = letters[_o+(temp)];
         delay(3);
-        SPI0DAT = letters[_a+(temp)];
-        delay(3);
-        SPI0DAT = letters[_b+(temp)];
-        delay(2);
-        SPI0DAT = letters[_e+(temp)];
-        delay(3);
-        SPI0DAT = letters[_a+(temp)];
-        delay(3);
-        SPI0DAT = letters[_r+(temp)];
-        delay(3);
-        SPI0DAT = letters[_s+(temp)];
+        SPI0DAT = letters[_m+(temp)];
     }
     
 }
 
 void flight_window(unsigned short line)
 {
-		if(!hideosd && crosshair_l>0 && crosshair_l<line && line<crosshair_l+9)
+		if(showcrosshair && crosshair_l>0 && crosshair_l<line && line<crosshair_l+9)
 		{
 			temp = line - crosshair_l;
 			delay(87);
@@ -335,7 +333,7 @@ void flight_window(unsigned short line)
         }
     }
 
-    if(!hideosd && mode_l<line && line<mode_l+9)
+    if(mode_l<line && line<mode_l+9)
     {
         temp = line - mode_l;
 				
@@ -447,7 +445,7 @@ void flight_window(unsigned short line)
         }
         
     }
-    if(!hideosd && vol_l<line && line<vol_l+9)
+    if(vol_l<line && line<vol_l+9)
     {
         temp = line - vol_l;
         delay(5);
